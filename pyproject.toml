@@ -1,0 +1,43 @@
+[project]
+name = "han-agents"
+version = "0.0.1"
+description = "Finalist agents from the Human Agent Negotiation (HAN) league of ANAC"
+readme = "README.md"
+requires-python = "~=3.11"
+authors = [
+    { name = "Yasser Mohammad", email = "yasserfarouk@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+# Core deps shared by every finalist. Per-team requirements files live
+# under src/han_agents/han{year}/team_X/requirements.txt and are merged
+# into the optional-dependencies block below by set_han_finalists.py.
+dependencies = [
+    "negmas>=0.11",
+]
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "hypothesis",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+han_agents = ["**/*.json", "**/*.txt", "**/*.md", "**/*.yaml", "**/*.pkl", "**/*.pt", "**/*.bin"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
