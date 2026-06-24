@@ -1,0 +1,5 @@
+tenacity
+ollama
+negmas
+negmas_llm
+hatchling

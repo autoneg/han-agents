@@ -1,0 +1,39 @@
+[project]
+name = "han2026"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "negmas>=0.15.2",
+    "negmas-llm>=0.4.2",
+    "hani>=0.3.0",
+    "typer>=0.15.0",
+    # For unstable development versions, comment out the above and use:
+    # "negmas @ git+https://github.com/yasserfarouk/negmas.git@main",
+    # "negmas-llm @ git+https://github.com/autoneg/negmas-llm.git@main",
+    # "hani @ git+https://github.com/autoneg/hani.git@main",
+]
+
+[tool.uv]
+package = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["examples", "tests"]
+force-include = {"main.py" = "main.py", "lastoffer.py" = "lastoffer.py", "README.md" = "README.md", "scenarios" = "scenarios"}
+
+[project.scripts]
+han2026 = "main:app"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.0",
+    "pytest>=8.0.0",
+]

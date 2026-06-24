@@ -1,0 +1,5 @@
+negmas>=0.15.2
+negmas-llm>=0.4.2
+hani>=0.3.0
+tenacity>=9.1.2
+typer>=0.15.0

@@ -1,0 +1,4 @@
+numpy
+scipy
+negmas
+attrs==23.2.0

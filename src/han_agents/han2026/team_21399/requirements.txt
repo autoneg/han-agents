@@ -1,0 +1,4 @@
+negmas
+negmas-llm
+hani
+typer>=0.15.0

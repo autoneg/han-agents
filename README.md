@@ -73,3 +73,45 @@ finalists at runtime (HANI's venv on production, primarily).
 
 Add a new `han<year>/` subdir and bump the version. The
 `get_agents(year=2027, …)` call will pick it up automatically.
+
+<!-- BEGIN generated standings: 2026 -->
+
+## ANAC 2026 Results
+
+### Qualified agents (22)
+
+| # | Agent | ID | Author | Team | Institute | Country |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | AdaptiveBargainNegotiator | 21709 | Hajime Endo | Team Ukku | Tokyo University of Agriculture and Technology | Japan |
+| 2 | AegisAgentR168 | 22280 | Mizuno | Team 374 | — | Japan |
+| 3 | Agent96 | 22147 | Ismail Kerfai | Agent96 | Leibniz Universität Hannover | Germany |
+| 4 | AgoraAINegotiator | 21181 | Christos Tsoufis | agoraAI | Université Paris Dauphine - PSL | France |
+| 5 | CivicHAN | 22270 | Michael Ibrahim | Team 409 | Cairo University | Egypt |
+| 6 | Closerv23 | 22286 | Avinash Pathak | Team 422 | Independent | India |
+| 7 | CodexAgentHan | 21723 | Ryota GENSEKI | Team 507 | Tokyo University of Agriculture and Technology | Japan |
+| 8 | Equinox | 21099 | Roshia | Equinox | Kyoto University | Japan |
+| 9 | Group8 | 21399 | Asim Sallio | Group_8 | Özyeğin University | Türkiye |
+| 10 | Gunner_Agent | 21480 | Omer Shani Steinmetz | Team 372 | College of Management Academic Studies | Israel |
+| 11 | HannariHamaguriHAN | 21125 | Rinon Asanuma | Team 376 | Tokyo University of Agriculture and Technology | Japan |
+| 12 | HiHan | 21736 | カズマ | チーム298 | Tokyo University of Agriculture and Technology | Japan |
+| 13 | HybridPisaNegotiator | 21787 | Beste Nur Pacci | Team 508 | Özyeğin University | Türkiye |
+| 14 | LastOffer | 21405 | Felix Bieber | Last Offer | Leibniz Universität Hannover | Germany |
+| 15 | NegotiatorX | 21049 | Serhat Giydiren | TeamX | Özyeğin University | Türkiye |
+| 16 | Nekotiator | 21656 | Toshikazu Ogura | Team 390 | Nagoya Institute of Technology | Japan |
+| 17 | NeoNegotiator | 21627 | Eymen | Team 377 | Özyeğin University | Türkiye |
+| 18 | NEXUSNegotiator | 21113 | Shahzeen Ahmad | Team 387 | Özyeğin University | Türkiye |
+| 19 | Semruk | 21086 | Mehmet Tuğberk ÇİL | Semruk | Özyeğin University | Türkiye |
+| 20 | SnowyDayAgent | 22262 | Tyrone Serapio | ST | Brown University | United States |
+| 21 | Sun | 21400 | Uraz Kağan GÜNEŞ | Team 434 | Özyeğin University | Türkiye |
+| 22 | T2Agent | 21146 | TogasakiTakashi | Team 397 | Tokyo University of Agriculture and Technology | Japan |
+
+Get them after install with:
+
+```python
+get_agents(2026, qualified_only=True)
+```
+
+**Disqualified (2):** hagent, MiAgent
+
+<!-- END generated standings: 2026 -->
+

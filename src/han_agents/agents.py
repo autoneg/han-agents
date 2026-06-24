@@ -35,8 +35,10 @@ _REGISTRY: dict[int, list[dict]] = {
 def get_agents(
     year: int,
     *,
+    qualified_only: bool = False,
     finalists_only: bool = False,
     winners_only: bool = False,
+    skip_failing_agents: bool = False,
     as_class: Literal[False] = False,
 ) -> tuple[str, ...]: ...
 
@@ -45,8 +47,10 @@ def get_agents(
 def get_agents(
     year: int,
     *,
+    qualified_only: bool = False,
     finalists_only: bool = False,
     winners_only: bool = False,
+    skip_failing_agents: bool = False,
     as_class: Literal[True],
 ) -> tuple[type, ...]: ...
 
@@ -54,32 +58,45 @@ def get_agents(
 def get_agents(
     year: int,
     *,
+    qualified_only: bool = False,
     finalists_only: bool = False,
     winners_only: bool = False,
+    skip_failing_agents: bool = False,
     as_class: bool = False,
 ) -> tuple:
     """Return the agents registered for a given competition year.
 
+    The participant set, code, and metadata flags are generated into
+    ``han_agents/registry.py`` by scmlweb/python/update_agents_repo.py
+    (the single source of truth). HAN has no track. A qualified agent is
+    any non-disqualified participant; finalists/winners are populated
+    once announced (set_finalists.py / set_winners.py).
+
     Args:
         year: The competition year (e.g. 2026).
+        qualified_only: Drop disqualified entries.
         finalists_only: Only return entries flagged as finalists.
         winners_only:   Only return entries flagged as winners.
+        skip_failing_agents: Drop agents marked as failing their tests
+            (listed in FAILING_AGENTS). Absence from FAILING_AGENTS is the
+            default "passing" state.
         as_class: Return the class objects instead of dotted-path strings.
 
     Returns:
         Tuple of dotted-path strings (or tuple of class objects when
         as_class=True). Empty tuple when the year has no entries.
     """
-    entries = _REGISTRY.get(int(year), [])
-    out: list = []
-    for e in entries:
-        if winners_only and not e.get("metadata", {}).get("winner"):
-            continue
-        if finalists_only and not e.get("metadata", {}).get("finalist"):
-            continue
-        path = e["class_path"]
-        if as_class:
-            out.append(get_class(path))
-        else:
-            out.append(path)
-    return tuple(out)
+    from han_agents.registry import get_participants
+
+    paths = get_participants(
+        int(year),
+        None,
+        qualified_only=qualified_only,
+        finalists_only=finalists_only,
+        winners_only=winners_only,
+    )
+    if skip_failing_agents:
+        paths = tuple(p for p in paths if p not in FAILING_AGENTS.keys())
+    if as_class:
+        return tuple(get_class(p) for p in paths)
+    return tuple(paths)
