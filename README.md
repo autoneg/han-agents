@@ -74,6 +74,8 @@ finalists at runtime (HANI's venv on production, primarily).
 Add a new `han<year>/` subdir and bump the version. The
 `get_agents(year=2027, …)` call will pick it up automatically.
 
+<!-- BEGIN generated standings region -->
+
 <!-- BEGIN generated standings: 2026 -->
 
 ## ANAC 2026 Results
@@ -115,4 +117,4 @@ get_agents(2026, qualified_only=True)
 
 <!-- END generated standings: 2026 -->
 
-
+<!-- END generated standings region -->
