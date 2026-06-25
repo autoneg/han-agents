@@ -16,9 +16,9 @@ AUTHOR = 'Shahzeen Ahmad'
 MEMBERS = [{'name': 'Shahzeen Ahmad', 'institution': 'Özyeğin University', 'country': 'Türkiye'}]
 COUNTRY = 'Türkiye'
 INSTITUTION = 'Özyeğin University'
-TAGS = ['Bayesian Methods', 'Game Theory', 'Psychology', 'Heuristic / Rule-based', 'Optimization', 'Generative AI', 'Embeddings / Vector Search']
+TAGS = ['Reinforcement Learning', 'Bayesian Methods', 'Game Theory', 'Psychology', 'Heuristic / Rule-based', 'Optimization', 'Generative AI', 'Embeddings / Vector Search']
 USES_LLM = False
-DESC = ''
+DESC = 'NEXUS eliminates zero-score deadlocks through a dynamic achievable utility estimator that continuously adapts the aspiration level using five signals: Pareto frontier ceiling, Nash bargaining anchor, empirical best-received offer, opponent behaviour (DANS classification), and RVFitter reservation value estimate. Bidding holds near the utility maximum until t=0.65, then descends via a closed-form Boulware curve that is step-count-invariant. A hybrid three-layer opponent model (frequency, hard-headed, Bayesian Dirichlet) with optional GNash blending estimates opponent preferences. Acceptance uses thirteen graduated conditions including ACnext, Nash-point recognition, and steps-left-based deadline rules. Free-text messages apply lexicon sentiment with a Bayesian manipulation filter to modulate tone.'
 METADATA = {
     'id': ID, 'name': NAME, 'class_name': CLASS_NAME,
     'version': VERSION, 'team': TEAM, 'author': AUTHOR,

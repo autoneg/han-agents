@@ -38,6 +38,20 @@ _REGISTRY: dict = json.loads(r"""
             }
         },
         {
+            "class_path": "han_agents.han2026.team_21058.mi_agent.MiAgent",
+            "metadata": {
+                "finalist": false,
+                "winner": false,
+                "qualified": false,
+                "disqualified": true,
+                "uses_llm": true,
+                "has_report": false,
+                "has_description": false,
+                "team_id": "21058",
+                "name": "MiAgent"
+            }
+        },
+        {
             "class_path": "han_agents.han2026.team_21086.semruk.SemrukNegotiator",
             "metadata": {
                 "finalist": false,
@@ -74,7 +88,7 @@ _REGISTRY: dict = json.loads(r"""
                 "disqualified": false,
                 "uses_llm": false,
                 "has_report": true,
-                "has_description": false,
+                "has_description": true,
                 "team_id": "21113",
                 "name": "NEXUSNegotiator"
             }
@@ -203,6 +217,20 @@ _REGISTRY: dict = json.loads(r"""
                 "has_description": true,
                 "team_id": "21656",
                 "name": "Nekotiator"
+            }
+        },
+        {
+            "class_path": "han_agents.han2026.team_21687.hagent_agent.HAgent",
+            "metadata": {
+                "finalist": false,
+                "winner": false,
+                "qualified": false,
+                "disqualified": true,
+                "uses_llm": false,
+                "has_report": false,
+                "has_description": false,
+                "team_id": "21687",
+                "name": "hagent"
             }
         },
         {

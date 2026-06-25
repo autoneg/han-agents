@@ -16,9 +16,9 @@ AUTHOR = 'TogasakiTakashi'
 MEMBERS = [{'name': 'TogasakiTakashi', 'institution': 'Tokyo University of Agriculture and Technology', 'country': 'Japan'}]
 COUNTRY = 'Japan'
 INSTITUTION = 'Tokyo University of Agriculture and Technology'
-TAGS = ['Large Language Model']
+TAGS = ['Psychology', 'Large Language Model']
 USES_LLM = True
-DESC = 'RiskAdaptiveV13Negotiator is a risk-adaptive negotiation agent designed for the HAN 2026 setting. The agent combines a deterministic concession strategy with lightweight language-based risk assessment. Its core policy estimates negotiation breakdown risk from time pressure, offer gaps, concession stagnation, and an LLM-based interpretation of the recent dialogue. Both heuristic risk and LLM risk are smoothed with exponential moving averages to avoid unstable one-turn reactions. The final risk value directly controls acceptance thresholds and proposal targets: when risk is low, the agent preserves high self-utility; when risk rises, it concedes more actively to improve agreement chances. Counteroffers are selected from near-Pareto-efficient outcomes close to the current target utility, prioritizing offers that remain acceptable for the agent while appearing attractive to the opponent. The LLM is used only as an auxiliary risk signal, not as the primary decision maker.'
+DESC = 'T2Agent follows a risk-adaptive, target-guided negotiation strategy. It estimates the opponent’s behavior from bid history, monitors concession pace, volatility, and potential non-concession, then chooses an appropriate mode ranging from firm to cooperative. Instead of relying on a single blended score, it first determines how much utility risk is acceptable, sets a target utility for the current phase, and searches for Pareto or near-Pareto offers around that target. As time pressure increases, it relaxes thresholds carefully while avoiding unnecessary early concessions. Natural-language responses are generated separately from numerical decisions, keeping the strategic bidding logic deterministic, analyzable, and robust across domains and scenarios.'
 METADATA = {
     'id': ID, 'name': NAME, 'class_name': CLASS_NAME,
     'version': VERSION, 'team': TEAM, 'author': AUTHOR,

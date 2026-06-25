@@ -5,7 +5,7 @@ import importlib as _importlib
 __all__ = []
 __import_errors__ = {}
 
-_TEAMS = ["team_21049", "team_21086", "team_21099", "team_21113", "team_21125", "team_21146", "team_21181", "team_21399", "team_21400", "team_21405", "team_21480", "team_21627", "team_21656", "team_21709", "team_21723", "team_21736", "team_21787", "team_22147", "team_22262", "team_22270", "team_22280", "team_22286"]
+_TEAMS = ["team_21049", "team_21058", "team_21086", "team_21099", "team_21113", "team_21125", "team_21146", "team_21181", "team_21399", "team_21400", "team_21405", "team_21480", "team_21627", "team_21656", "team_21687", "team_21709", "team_21723", "team_21736", "team_21787", "team_22147", "team_22262", "team_22270", "team_22280", "team_22286"]
 
 for _t in _TEAMS:
     try:

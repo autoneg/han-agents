@@ -18,7 +18,7 @@ COUNTRY = 'Japan'
 INSTITUTION = 'Kyoto University'
 TAGS = ['Reinforcement Learning', 'Bayesian Methods', 'Game Theory', 'Economics', 'Large Language Model']
 USES_LLM = True
-DESC = 'just a starting point for further experimentation.'
+DESC = "Equinox is a bilateral negotiation agent built on NegMAS for the ANAC 2026 Human-Agent\r\nNegotiation (HAN) league. It pairs a learned bidding strategy with an online Bayesian model of the opponent's preferences and a privacy-preserving natural-language messaging layer."
 METADATA = {
     'id': ID, 'name': NAME, 'class_name': CLASS_NAME,
     'version': VERSION, 'team': TEAM, 'author': AUTHOR,
