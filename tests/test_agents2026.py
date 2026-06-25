@@ -11,6 +11,7 @@ an order of magnitude slower, so they are skipped unless an Ollama
 backend is reachable AND ``HANAGENTS_RUN_LLM`` is enabled. Their import
 is still covered by the generated ``test_han_2026.py`` smoke test.
 """
+
 import os
 
 import pytest
@@ -84,15 +85,13 @@ def _run_one(path: str):
 
 
 def test_get_agents_2026_counts():
-    assert len(get_agents(2026)) == 22
+    assert len(get_agents(2026)) == 24
     assert len(get_agents(2026, qualified_only=True)) == 22
     assert len(get_agents(2026, finalists_only=True)) == 0
     assert len(get_agents(2026, winners_only=True)) == 0
 
 
-@mark.parametrize(
-    "path", NONLLM_2026, ids=[p.split(".")[2] for p in NONLLM_2026]
-)
+@mark.parametrize("path", NONLLM_2026, ids=[p.split(".")[2] for p in NONLLM_2026])
 def test_can_run_nonllm_2026(path):
     _run_one(path)
 
