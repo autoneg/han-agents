@@ -6,15 +6,13 @@ suite small and fast despite the large field, every agent runs against
 a single builtin opponent on one tiny generated scenario with very few
 steps and no ufun rotation.
 
-LLM-backed agents (``uses_llm``) make one model call per round and are
-an order of magnitude slower, so they are skipped unless an Ollama
-backend is reachable AND ``HANAGENTS_RUN_LLM`` is enabled. Their import
-is still covered by the generated ``test_han_2026.py`` smoke test.
+LLM-backed agents (``uses_llm``) make one model call per round. The
+``ollama_backend`` fixture (see ``conftest.py``) guarantees an
+Ollama-compatible endpoint on :11434 -- a real Ollama if one is already
+running, otherwise a fast in-process fake -- so these agents exercise
+their model-call code paths deterministically without a model download.
 """
 
-import os
-
-import pytest
 from pytest import mark
 
 from negmas.helpers import get_class
@@ -42,18 +40,6 @@ def _split():
 
 
 NONLLM_2026, LLM_2026 = _split()
-
-
-def _run_llm_enabled() -> bool:
-    if os.environ.get("HANAGENTS_RUN_LLM", "").lower() not in ("1", "true", "yes"):
-        return False
-    try:
-        import urllib.request
-
-        urllib.request.urlopen("http://localhost:11434/api/tags", timeout=2)
-        return True
-    except Exception:
-        return False
 
 
 def _tiny_scenario() -> Scenario:
@@ -96,10 +82,9 @@ def test_can_run_nonllm_2026(path):
     _run_one(path)
 
 
-@pytest.mark.skipif(
-    not _run_llm_enabled(),
-    reason="LLM agents: set HANAGENTS_RUN_LLM=1 with a reachable Ollama backend",
-)
 @mark.parametrize("path", LLM_2026, ids=[p.split(".")[2] for p in LLM_2026])
-def test_can_run_llm_2026(path):
+def test_can_run_llm_2026(path, ollama_backend):
+    # ``ollama_backend`` guarantees an Ollama-compatible endpoint on :11434
+    # (a real Ollama if one is running, otherwise a fast in-process fake),
+    # so the LLM agents exercise their model-call paths deterministically.
     _run_one(path)
