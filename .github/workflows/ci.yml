@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --extra dev --python ${{ matrix.python-version }}
+
+      - name: Run tests
+        # The LLM finalists talk to an Ollama-compatible endpoint on
+        # :11434. No model is pulled in CI: the ollama_backend fixture
+        # (tests/conftest.py) stands up a fast in-process fake, so the LLM
+        # agents exercise their model-call paths deterministically. To run
+        # against a real small model instead, start `ollama serve` with a
+        # tiny model (e.g. qwen3:0.6b) before this step.
+        run: uv run --extra dev pytest -q

@@ -1,0 +1,45 @@
+# Mirrors ../anl-agents/.pre-commit-config.yaml. The competition
+# submissions under src/han_agents/han*/team_* are kept frozen (they are
+# what each team submitted), so the auto-fixing/formatting hooks are
+# scoped away from them via `exclude`.
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v6.0.0
+      hooks:
+          - id: debug-statements
+          - id: check-yaml
+          - id: check-json
+          - id: check-case-conflict
+          - id: check-added-large-files
+            args: ["--maxkb=10000"]
+          - id: fix-byte-order-marker
+          - id: mixed-line-ending
+            exclude: ^src/han_agents/han
+          - id: end-of-file-fixer
+            exclude: ^src/han_agents/han
+          - id: trailing-whitespace
+            exclude: ^src/han_agents/han
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.14.13
+      hooks:
+          - id: ruff
+            types_or: [python, pyi]
+            exclude: ^src/han_agents/han
+            args:
+                [
+                    --fix,
+                    --exclude,
+                    __init__.py,
+                    --unsafe-fixes,
+                    --target-version,
+                    py311,
+                ]
+          - id: ruff-format
+            types_or: [python, pyi, jupyter]
+            exclude: ^src/han_agents/han
+    - repo: https://github.com/asottile/blacken-docs
+      rev: 1.20.0
+      hooks:
+          - id: blacken-docs
+            exclude: ^src/han_agents/han
+            additional_dependencies: [black>=22.1]
