@@ -34,6 +34,7 @@ src/han_agents/
     └── team_<id>/
         ├── __init__.py             # exposes MAIN_AGENT, __all__
         ├── requirements.txt        # per-team deps (optional)
+        ├── report.pdf              # per-team report (always available for qualified agents)
         └── <strategy>.py           # the agent code
 ```
 
