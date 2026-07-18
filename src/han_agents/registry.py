@@ -34,7 +34,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": false,
                 "team_id": "21049",
-                "name": "NegotiatorX"
+                "name": "NegotiatorX",
+                "description": "Non-LLM behavioral, Pareto-aware negotiator for HAN 2026 with template-based natural-language messages."
             }
         },
         {
@@ -48,7 +49,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": false,
                 "has_description": false,
                 "team_id": "21058",
-                "name": "MiAgent"
+                "name": "MiAgent",
+                "description": "LLM meta-negotiator wrapping a time-based (Boulware/Conceder/Linear) core with an Ollama model that generates brief persuasive messages for each offer."
             }
         },
         {
@@ -62,7 +64,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": false,
                 "team_id": "21086",
-                "name": "Semruk"
+                "name": "Semruk",
+                "description": "Hybrid Boulware/BOA negotiator on scale-invariant normalized utility, with Smith-frequency opponent modeling and template-based (non-LLM) natural-language messages."
             }
         },
         {
@@ -76,7 +79,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21099",
-                "name": "Equinox"
+                "name": "Equinox",
+                "description": "Reinforcement-learning (SAC) bilateral negotiator adapted from an SCML winner, with Bayesian opponent modeling and template-based (non-LLM) messages."
             }
         },
         {
@@ -90,7 +94,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21113",
-                "name": "NEXUSNegotiator"
+                "name": "NEXUSNegotiator",
+                "description": "Negotiator combining frequency, hard-headed, and Bayesian opponent models (with optional GNash) for the stochastic alternating-offers protocol."
             }
         },
         {
@@ -104,7 +109,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21125",
-                "name": "HannariHamaguriHAN"
+                "name": "HannariHamaguriHAN",
+                "description": "Hybrid HAN negotiator: a deterministic BOA strategy with frequency opponent models and fast, human-like templated text."
             }
         },
         {
@@ -118,7 +124,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21146",
-                "name": "T2Agent"
+                "name": "T2Agent",
+                "description": "Risk-adaptive negotiator that sets utility targets from heuristic breakdown-risk, picks near-Pareto offers via frequency-based opponent modeling, and uses an LLM only to phrase messages."
             }
         },
         {
@@ -132,7 +139,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21181",
-                "name": "AgoraAINegotiator"
+                "name": "AgoraAINegotiator",
+                "description": "Boulware-based hybrid agent with per-issue frequency opponent modeling, a keyword-based text belief state, and an Ollama LLM writing persuasive messages."
             }
         },
         {
@@ -146,7 +154,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21399",
-                "name": "Group8"
+                "name": "Group8",
+                "description": "Behavior-adaptive negotiator that tunes its concession strategy to the observed opponent's behavior."
             }
         },
         {
@@ -160,7 +169,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21400",
-                "name": "Sun"
+                "name": "Sun",
+                "description": "BOA-based negotiator (behavior-safe baseline) with Smith-frequency opponent modeling and a rescue branch for opponents stuck on rigid minimum-bundle offers."
             }
         },
         {
@@ -174,7 +184,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21405",
-                "name": "LastOffer"
+                "name": "LastOffer",
+                "description": "Hybrid negotiator combining a utility-based decision model, a time-dependent aspiration function, and an adaptive opponent model with endgame robustness."
             }
         },
         {
@@ -188,7 +199,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21480",
-                "name": "Gunner_Agent"
+                "name": "Gunner_Agent",
+                "description": "LLM meta-negotiator built on the Shochan (ANL 2024 winner) aspiration and Pareto-propose core, adding a two-phase curve, reservation-value floor, adaptive opponent model, and an LLM message layer."
             }
         },
         {
@@ -202,7 +214,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21627",
-                "name": "NeoNegotiator"
+                "name": "NeoNegotiator",
+                "description": "LLM meta-negotiator applying six progressive tactics: issue logrolling, sentiment-adaptive tone, door-in-the-face anchoring, BATNA signaling, deadline delay, and micro-step concessions."
             }
         },
         {
@@ -216,7 +229,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21656",
-                "name": "Nekotiator"
+                "name": "Nekotiator",
+                "description": "LLM-based negotiator that queries an Ollama model to infer opponent issue weights and targets, then concedes from a decaying aspiration level while offering win-win counter-proposals."
             }
         },
         {
@@ -230,7 +244,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": false,
                 "has_description": false,
                 "team_id": "21687",
-                "name": "hagent"
+                "name": "hagent",
+                "description": "Belief-based contextual-bandit negotiator for HAN 2026."
             }
         },
         {
@@ -244,7 +259,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21709",
-                "name": "AdaptiveBargainNegotiator"
+                "name": "AdaptiveBargainNegotiator",
+                "description": "BOA-architecture bargaining agent combining time-dependent concession, frequency-based opponent modeling, and dynamic acceptance, with an LLM generating natural-language messages for its rule-based decisions."
             }
         },
         {
@@ -258,7 +274,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21723",
-                "name": "CodexAgentHan"
+                "name": "CodexAgentHan",
+                "description": "Non-LLM bilateral negotiator using a time-dependent Boulware aspiration policy, frequency-based opponent modeling, cycle-aware exploration, and template-generated natural-language messages."
             }
         },
         {
@@ -272,7 +289,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21736",
-                "name": "HiHan"
+                "name": "HiHan",
+                "description": "Adaptive multi-phase negotiator that moves through exploration, Boulware concession, acceleration, and deadline phases with AC-Next acceptance."
             }
         },
         {
@@ -286,7 +304,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "21787",
-                "name": "HybridPisaNegotiator"
+                "name": "HybridPisaNegotiator",
+                "description": "Hybrid time- and behavior-based concession negotiator with online Bayesian opponent modeling and a local LLM that writes natural-language messages for already-chosen bids."
             }
         },
         {
@@ -300,7 +319,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "22147",
-                "name": "Agent96"
+                "name": "Agent96",
+                "description": "Hybrid human-negotiation agent with a deterministic, utility-safe Boulware core and frequency modeling of the human's offers; the LLM only polishes human-facing text."
             }
         },
         {
@@ -314,7 +334,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "22262",
-                "name": "SnowyDayAgent"
+                "name": "SnowyDayAgent",
+                "description": "Self-contained, no-LLM Snowy-style negotiator whose concession behavior is driven by a configurable utility curve (CurveConfig)."
             }
         },
         {
@@ -328,7 +349,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": false,
                 "team_id": "22270",
-                "name": "CivicHAN"
+                "name": "CivicHAN",
+                "description": "Non-LLM HAN negotiator using standard NegMAS decision logic and deterministic Markdown text to communicate with human partners."
             }
         },
         {
@@ -342,7 +364,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "22280",
-                "name": "AegisAgentR168"
+                "name": "AegisAgentR168",
+                "description": "BOA-style negotiator (R16.8) adding an exception-safe wrapper, very-late acceptance pickup, and anti-loop rescue offers, with the LLM used only for messages."
             }
         },
         {
@@ -356,7 +379,8 @@ _REGISTRY: dict = json.loads(r"""
                 "has_report": true,
                 "has_description": true,
                 "team_id": "22286",
-                "name": "Closerv23"
+                "name": "Closerv23",
+                "description": "Hard-anchoring hybrid negotiator for human-agent negotiation in HAN 2026."
             }
         }
     ]

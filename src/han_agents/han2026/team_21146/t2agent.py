@@ -1,3 +1,5 @@
+"""Risk-adaptive negotiator that sets utility targets from heuristic breakdown-risk, picks near-Pareto offers via frequency-based opponent modeling, and uses an LLM only to phrase messages."""
+
 from __future__ import annotations
 import contextlib
 import io

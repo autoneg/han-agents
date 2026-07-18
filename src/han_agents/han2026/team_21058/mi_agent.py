@@ -1,3 +1,4 @@
+"""LLM meta-negotiator wrapping a time-based (Boulware/Conceder/Linear) core with an Ollama model that generates brief persuasive messages for each offer."""
 from negmas.common import Outcome
 from negmas.gb import BoulwareTBNegotiator
 from negmas.sao import (

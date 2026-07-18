@@ -1,4 +1,6 @@
-import random 
+"""LLM-based negotiator that queries an Ollama model to infer opponent issue weights and targets, then concedes from a decaying aspiration level while offering win-win counter-proposals."""
+
+import random
 import json 
 import re 
 import warnings 

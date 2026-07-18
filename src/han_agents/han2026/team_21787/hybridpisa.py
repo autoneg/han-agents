@@ -1,3 +1,5 @@
+"""Hybrid time- and behaviour-based concession negotiator with online Bayesian opponent modelling and a local LLM that writes natural-language messages for already-chosen bids."""
+
 import statistics
 
 from negmas.sao.common import SAOResponse, SAOState, ResponseType
