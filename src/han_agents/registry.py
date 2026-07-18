@@ -26,7 +26,7 @@ _REGISTRY: dict = json.loads(r"""
         {
             "class_path": "han_agents.han2026.team_21049.negotiatorx.negotiator.NegotiatorX",
             "metadata": {
-                "finalist": false,
+                "finalist": true,
                 "winner": false,
                 "qualified": true,
                 "disqualified": false,
@@ -71,7 +71,7 @@ _REGISTRY: dict = json.loads(r"""
         {
             "class_path": "han_agents.han2026.team_21099.equinox.Equinox",
             "metadata": {
-                "finalist": false,
+                "finalist": true,
                 "winner": false,
                 "qualified": true,
                 "disqualified": false,
@@ -341,7 +341,7 @@ _REGISTRY: dict = json.loads(r"""
         {
             "class_path": "han_agents.han2026.team_22270.civic_compass.CivicCompassHANNegotiator",
             "metadata": {
-                "finalist": false,
+                "finalist": true,
                 "winner": false,
                 "qualified": true,
                 "disqualified": false,
@@ -356,7 +356,7 @@ _REGISTRY: dict = json.loads(r"""
         {
             "class_path": "han_agents.han2026.team_22280.aegis_agent_r168.AegisR168FinalNegotiator",
             "metadata": {
-                "finalist": false,
+                "finalist": true,
                 "winner": false,
                 "qualified": true,
                 "disqualified": false,

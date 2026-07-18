@@ -81,6 +81,21 @@ Add a new `han<year>/` subdir and bump the version. The
 
 ## ANAC 2026 Results
 
+### Finalists (4)
+
+| # | Agent | ID | Author | Team | Institute | Country |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | AegisAgentR168 | 22280 | Mizuno | Team 374 | — | Japan |
+| 2 | CivicHAN | 22270 | Michael Ibrahim | Team 409 | Cairo University | Egypt |
+| 3 | Equinox | 21099 | Roshia | Equinox | Kyoto University | Japan |
+| 4 | NegotiatorX | 21049 | Serhat Giydiren | TeamX | Özyeğin University | Türkiye |
+
+Get them after install with:
+
+```python
+get_agents(2026, finalists_only=True)
+```
+
 ### Qualified agents (22)
 
 | # | Agent | ID | Author | Team | Institute | Country |
