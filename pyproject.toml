@@ -1,6 +1,6 @@
 [project]
 name = "han-agents"
-version = "0.0.1"
+version = "0.0.2"
 description = "Finalist agents from the Human Agent Negotiation (HAN) league of ANAC"
 readme = "README.md"
 requires-python = "~=3.11"
