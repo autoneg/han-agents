@@ -1,0 +1,47 @@
+name: CI (GitHub negmas)
+
+# Same suite as ci.yml, but pins negmas to the latest development
+# version from GitHub (main branch) instead of the released PyPI wheel.
+# Catches breakage against unreleased negmas changes early.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-github-negmas-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --extra dev --python ${{ matrix.python-version }}
+
+      - name: Install negmas from GitHub (latest)
+        # Replace the PyPI negmas pinned by uv sync with the tip of the
+        # negmas repo, so the suite runs against unreleased negmas.
+        run: uv pip install --force-reinstall "negmas @ git+https://github.com/yasserfarouk/negmas.git"
+
+      - name: Run tests
+        # --no-sync keeps the GitHub negmas installed above; without it,
+        # uv run would re-sync and restore the PyPI version. See ci.yml
+        # for the ollama_backend fake-model note.
+        run: uv run --no-sync --extra dev pytest -q
