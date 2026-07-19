@@ -73,7 +73,7 @@ def _run_one(path: str):
 def test_get_agents_2026_counts():
     assert len(get_agents(2026)) == 24
     assert len(get_agents(2026, qualified_only=True)) == 22
-    assert len(get_agents(2026, finalists_only=True)) == 0
+    assert len(get_agents(2026, finalists_only=True)) == 4
     assert len(get_agents(2026, winners_only=True)) == 0
 
 
