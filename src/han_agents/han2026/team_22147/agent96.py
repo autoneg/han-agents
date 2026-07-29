@@ -13,6 +13,7 @@ from negmas.common import Outcome
 from negmas.preferences import MappingUtilityFunction
 from negmas.sao.common import SAOResponse, SAOState, ResponseType
 from negmas.sao.negotiators.base import SAOCallNegotiator
+from negmas_llm.config import resolve_llm_config
 
 DEFAULT_OLLAMA_MODEL = "qwen3:4b-instruct"
 EARLY_PHASE = "early"
@@ -73,6 +74,15 @@ class Agent96(SAOCallNegotiator):
     offers, follows a Boulware-style concession curve, and uses a lightweight
     frequency model of the human's offers. The LLM is only used to polish short
     human-facing text and is never trusted with offer or acceptance decisions.
+
+    Provider is architecturally fixed to Ollama: ``_call_ollama`` speaks
+    Ollama's native ``/api/generate`` HTTP endpoint directly (not litellm), so
+    there is no provider abstraction to resolve. Only ``model``/``api_base``
+    are centrally resolved (explicit arg > per-type env var > global env var
+    > built-in default), via the same ``resolve_llm_config`` every
+    negmas_llm-based agent in this repo uses. A fully provider-agnostic
+    rewrite (routed through litellm) lives as ``GeneralizedAgent96`` in
+    ``han_agents.contrib.agent96``.
     """
 
     def __init__(
@@ -83,7 +93,7 @@ class Agent96(SAOCallNegotiator):
         use_structured_output: bool = True,
         timeout: float = 8.0,
         num_retries: int = 1,
-        api_base: str = "http://localhost:11434",
+        api_base: str | None = None,  # resolved centrally
         use_llm_text: bool | str = "auto",
         use_llm_social: bool | str = "auto",
         human_mode: bool = False,
@@ -110,14 +120,23 @@ class Agent96(SAOCallNegotiator):
         super().__init__(**kwargs)
         if not hasattr(self, "_opponent_ufun_model"):
             self._opponent_ufun_model = None
-        self.model = DEFAULT_OLLAMA_MODEL
+        resolved = resolve_llm_config(
+            type(self).__name__,
+            provider="ollama",
+            model=model,
+            api_base=api_base,
+            default_provider="ollama",
+            default_model=DEFAULT_OLLAMA_MODEL,
+            lock_provider=True,  # this class only ever speaks Ollama's native API
+        )
+        self.model = resolved.model
         self.requested_model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.use_structured_output = use_structured_output
         self.timeout = timeout
         self.num_retries = max(0, num_retries)
-        self.api_base = api_base.rstrip("/")
+        self.api_base = (resolved.api_base or "http://localhost:11434").rstrip("/")
         self.use_llm_text = use_llm_text
         self.use_llm_social = use_llm_social
         self.human_mode = human_mode

@@ -33,6 +33,7 @@ from negmas.outcomes.common import ExtendedOutcome, Outcome
 from negmas.preferences import LinearAdditiveUtilityFunction
 from negmas.preferences.value_fun import TableFun
 from negmas.sao.common import SAOState
+from negmas_llm.common import litellm_model_string
 from negmas_llm.meta import LLMBoulwareTBNegotiator
 
 # Suppress litellm's verbose error output (provider-list + debug hints
@@ -413,17 +414,20 @@ class AgoraNegotiator(LLMBoulwareTBNegotiator):
     def _side_channel_model(self) -> str:
         """Resolve the model identifier for side-channel litellm calls.
 
-        Reads the parent class's `self.model` (set via the base
-        `LLMBoulwareTBNegotiator` initialiser and defaulting to
-        qwen3:4b-instruct, the only model permitted by the HAN 2026
-        league rules) and returns it in the litellm-formatted
-        "ollama/<name>" form. Falls back to `DEFAULT_OLLAMA_MODEL` if
-        the parent attribute is unset.
+        Mirrors `self.provider`/`self.model` (set via the base
+        `LLMBoulwareTBNegotiator` initialiser, centrally resolved --
+        explicit arg > per-type env var > global env var > built-in
+        default of ollama/qwen3:4b-instruct) into the litellm-formatted
+        "<provider>/<name>" string, via the same `litellm_model_string`
+        every negmas_llm-based agent uses. Falls back to
+        `DEFAULT_OLLAMA_MODEL` under the ollama provider if the parent
+        attribute is unset.
         """
+        provider = getattr(self, "provider", None) or "ollama"
         m = getattr(self, "model", None)
-        if isinstance(m, str) and m:
-            return f"ollama/{m}"
-        return f"ollama/{self.DEFAULT_OLLAMA_MODEL}"
+        if not (isinstance(m, str) and m):
+            m = self.DEFAULT_OLLAMA_MODEL
+        return litellm_model_string(provider, m)
 
     def _init_state(self) -> None:
         """Initialize all mutable tracking state."""

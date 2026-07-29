@@ -16,7 +16,7 @@ import re
 from collections import Counter
 from statistics import mean
 from typing import Any
-from negmas_llm import OllamaNegotiator
+from negmas_llm import LLMNegotiator
 from negmas.common import Outcome
 from negmas.sao.common import SAOResponse, SAOState, ResponseType
 from negmas.sao.negotiators.base import SAOCallNegotiator
@@ -8186,7 +8186,7 @@ class AegisR164Negotiator(AegisR163Negotiator):
         try:
             helper = getattr(self, "_r167_ollama_message_helper", None)
             if helper is None:
-                helper = OllamaNegotiator(
+                helper = LLMNegotiator(
                     model=self.llm_model,
                     temperature=0.15,
                     max_tokens=min(120, num_predict),

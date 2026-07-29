@@ -20,6 +20,7 @@ from typing import Any, Iterable
 from negmas.preferences import MappingUtilityFunction
 from negmas.sao.common import SAOResponse, SAOState, ResponseType
 from negmas.sao.negotiators.base import SAOCallNegotiator
+from negmas_llm.config import resolve_llm_config
 
 
 EPS = 1e-9
@@ -43,13 +44,30 @@ class CivicCompassHANNegotiator(SAOCallNegotiator):
     - frequency/trend opponent modeling from human offers,
     - issue-level counteroffer explanations,
     - short cooperative messages that avoid pressure or deception.
+
+    Provider is architecturally fixed to Ollama: the LLM call is a raw HTTP
+    POST to Ollama's native ``/api/generate`` endpoint (see ``_llm_url``),
+    not litellm, so there is no provider abstraction to resolve. ``model``
+    and the Ollama host/``api_base`` are centrally resolved (explicit arg >
+    per-type env var > global env var > this class's ``HAN_LLM_MODEL``/
+    ``OLLAMA_HOST`` legacy env vars > built-in default), via the same
+    ``resolve_llm_config`` every negmas_llm-based agent in this repo uses. A
+    fully provider-agnostic rewrite (routed through litellm) lives as
+    ``GeneralizedCivicCompassHANNegotiator`` in
+    ``han_agents.contrib.civic_compass``.
     """
 
     _GLOBAL_LLM_CHECKED = False
     _GLOBAL_LLM_READY = False
     _GLOBAL_LLM_HOST = ""
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        *args: Any,
+        model: str | None = None,  # resolved centrally
+        api_base: str | None = None,  # resolved centrally
+        **kwargs: Any,
+    ) -> None:
         super().__init__(*args, **kwargs)
         self._bids: list[_Bid] = []
         self._frontier: list[_Bid] = []
@@ -72,8 +90,17 @@ class CivicCompassHANNegotiator(SAOCallNegotiator):
         self._salt = "civic-compass-han"
         self._llm_failed = False
         self._llm_calls = 0
-        self._llm_model = os.environ.get("HAN_LLM_MODEL", "qwen3:4b-instruct")
-        host = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434").rstrip("/")
+        resolved = resolve_llm_config(
+            type(self).__name__,
+            provider="ollama",
+            model=model,
+            api_base=api_base or os.environ.get("OLLAMA_HOST"),
+            default_provider="ollama",
+            default_model=os.environ.get("HAN_LLM_MODEL", "qwen3:4b-instruct"),
+            lock_provider=True,  # this class only ever speaks Ollama's native API
+        )
+        self._llm_model = resolved.model
+        host = (resolved.api_base or "http://127.0.0.1:11434").rstrip("/")
         self._llm_url = f"{host}/api/generate"
         self._llm_timeout = 3.5
 

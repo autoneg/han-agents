@@ -3,16 +3,20 @@ from random import sample
 from negmas import PresortingInverseUtilityFunction, ResponseType
 from negmas.gb import ResponseType
 from negmas.preferences import PresortingInverseUtilityFunction
-from negmas_llm import OllamaNegotiator
+from negmas_llm import LLMNegotiator
 from negmas.sao import SAOResponse
 from collections import Counter, deque, defaultdict
 import random
 
-class LastOfferNegotiator(OllamaNegotiator):
+class LastOfferNegotiator(LLMNegotiator):
     """
     Our negotiation agent is a hybrid system combining a utility-based mathematical decision model,
     a time-dependent aspiration function, and an adaptive opponent model. The strategy balances self-interest
     maximization with concession dynamics, opponent behavior tracking, and endgame robustness.
+
+    Provider/model resolve centrally (explicit arg > per-type env var >
+    global env var > built-in default of ollama/qwen3:4b-instruct) instead
+    of being locked to the OllamaNegotiator convenience class.
     """
 
     def __init__(

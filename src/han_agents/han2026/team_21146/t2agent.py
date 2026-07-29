@@ -14,6 +14,7 @@ import litellm
 from negmas.common import Outcome
 from negmas.sao.common import ResponseType, SAOResponse, SAOState
 from negmas.sao.negotiators.base import SAOCallNegotiator
+from negmas_llm.config import resolve_llm_config
 
 OfferKey: TypeAlias = tuple[str, ...]
 Mode: TypeAlias = Literal["exploit", "balanced", "agreement", "salvage"]
@@ -62,12 +63,21 @@ class EvaluatedOffer:
 class LLMResponseTextPolicy:
     def __init__(
         self,
-        model: str = "ollama/qwen3:4b-instruct",
+        provider: str | None = None,  # resolved centrally
+        model: str | None = None,  # resolved centrally
         temperature: float = 0.4,
         max_tokens: int = 48,
         request_timeout: float | None = None,
     ) -> None:
-        self.model = model
+        resolved = resolve_llm_config(
+            "T2Agent", provider=provider, model=model, default_provider="ollama"
+        )
+        # Built as "<provider>/<model>" (not negmas_llm's litellm_model_string,
+        # which rewrites ollama -> ollama_chat for proper chat templating) so
+        # the default resolves to the exact "ollama/qwen3:4b-instruct" string
+        # this agent was tuned against; only the provider/model values
+        # themselves are now centrally configurable.
+        self.model = f"{resolved.provider}/{resolved.model}"
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.request_timeout = request_timeout
@@ -480,6 +490,8 @@ class OfferSelectionPolicy:
 class T2Agent(SAOCallNegotiator):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.enable_llm_response = bool(kwargs.pop("enable_llm_response", True))
+        self._llm_provider = kwargs.pop("provider", None)  # resolved centrally
+        self._llm_model = kwargs.pop("model", None)  # resolved centrally
         self.safety_margin = 0.05
         self.risk_factor = 1.0
         self.default_risk_time_power = 1.0
@@ -531,7 +543,9 @@ class T2Agent(SAOCallNegotiator):
         }
         super().__init__(*args, **kwargs)
         self.offer_selection: OfferSelectionPolicy = OfferSelectionPolicy()
-        self.response_policy: LLMResponseTextPolicy = LLMResponseTextPolicy()
+        self.response_policy: LLMResponseTextPolicy = LLMResponseTextPolicy(
+            provider=self._llm_provider, model=self._llm_model
+        )
         self._init_runtime_state()
         if self.nmi and getattr(self.nmi, "outcome_space", None) is not None:
             self.opponent_estimator.set_outcome_space(self.nmi.outcome_space)

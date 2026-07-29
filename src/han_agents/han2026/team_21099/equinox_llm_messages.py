@@ -159,21 +159,51 @@ def template_message(stance: Stance) -> str:
 
 
 # ---------------------------------------------------------------------------
-# LLM rendering (best-effort, sanitized). The model is fixed by the league to
-# qwen3:4b-instruct; we only ever ask it to phrase a stance we already chose.
+# LLM rendering (best-effort, sanitized). Provider/model resolve centrally
+# (explicit > per-type env var > global env var > built-in default of
+# ollama/qwen3:4b-instruct, via negmas_llm's resolve_llm_config) instead of
+# being fixed; we only ever ask the model to phrase a stance we already chose.
 # ---------------------------------------------------------------------------
 
 try:  # keep import light and optional
-    from negmas_llm.common import DEFAULT_MODELS as _DEFAULT_MODELS
-
-    _OLLAMA_MODEL = _DEFAULT_MODELS.get("ollama", "qwen3:4b-instruct")
+    from negmas_llm.common import litellm_model_string as _litellm_model_string
+    from negmas_llm.config import resolve_llm_config as _resolve_llm_config
 except Exception:  # pragma: no cover - negmas_llm always present in the league env
-    _OLLAMA_MODEL = "qwen3:4b-instruct"
+    _litellm_model_string = None
+    _resolve_llm_config = None
 
-_MODEL = f"ollama/{_OLLAMA_MODEL}"
-_API_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434")
 _TIMEOUT = float(os.environ.get("EQUINOX_LLM_TIMEOUT", "3"))
 _MAX_TOKENS = 64
+
+
+def _resolved_model_and_api_base() -> tuple[str, str | None]:
+    """The litellm model string and api_base to use for this call.
+
+    Re-resolved on every call (cheap: no I/O) so a deployment can change
+    ``NEGMAS_LLM_PROVIDER``/``NEGMAS_LLM_MODEL`` between negotiations without
+    restarting the process.
+    """
+    if _resolve_llm_config is None or _litellm_model_string is None:
+        return "ollama_chat/qwen3:4b-instruct", os.environ.get(
+            "OLLAMA_API_BASE", "http://localhost:11434"
+        )
+    resolved = _resolve_llm_config(
+        "Equinox",
+        # api_base intentionally NOT pre-filled from OLLAMA_API_BASE here:
+        # an explicit arg to resolve_llm_config outranks everything,
+        # including NEGMAS_LLM_API_BASE, which would wrongly send a
+        # non-ollama provider's requests to this Ollama-specific URL.
+        # OLLAMA_API_BASE is applied below, only for the ollama case.
+        default_provider="ollama",
+        # default_model intentionally omitted: None defers to negmas_llm's
+        # per-provider fallback table, so a provider override (e.g.
+        # NEGMAS_LLM_PROVIDER=anthropic) gets that provider's own default
+        # model instead of inheriting Ollama's.
+    )
+    api_base = resolved.api_base
+    if resolved.provider == "ollama" and api_base is None:
+        api_base = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434")
+    return _litellm_model_string(resolved.provider, resolved.model), api_base
 
 _SYSTEM_PROMPT = (
     "You speak for a negotiator chatting with a human counterpart. Reply with "
@@ -203,7 +233,7 @@ def _build_user_prompt(stance: Stance, dynamics: Dynamics) -> str:
 
 
 def _llm_complete(user_prompt: str) -> str | None:
-    """Best-effort single completion from the fixed local model.
+    """Best-effort single completion from the centrally-resolved model.
 
     Returns ``None`` on any problem (litellm missing, Ollama down, timeout,
     empty output). Never raises.
@@ -213,13 +243,14 @@ def _llm_complete(user_prompt: str) -> str | None:
     except Exception:
         return None
     try:
+        model, api_base = _resolved_model_and_api_base()
         response = litellm.completion(
-            model=_MODEL,
+            model=model,
             messages=[
                 {"role": "system", "content": _SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt},
             ],
-            api_base=_API_BASE,
+            api_base=api_base,
             temperature=0.7,
             max_tokens=_MAX_TOKENS,
             timeout=_TIMEOUT,

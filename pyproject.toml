@@ -19,10 +19,13 @@ classifiers = [
 dependencies = [
     "negmas>=0.15.7",
     # negmas-llm's central provider/model resolution (resolve_llm_config,
-    # used by GunnerAgent/MiAgent/Group8Negotiator so they never hardcode a
-    # provider or model) landed on GitHub main 2026-07-23 but has not been
-    # cut into a PyPI release yet (0.4.3 predates it) — pin to main until it is.
-    "negmas-llm @ git+https://github.com/autoneg/negmas-llm.git",
+    # used throughout han_agents.han2026 so no agent hardcodes a provider or
+    # model) landed on GitHub main 2026-07-23 but has not been cut into a
+    # PyPI release yet (0.4.3 predates it). [tool.uv.sources] below pins
+    # `uv sync`/`uv run` (what CI uses) to that GitHub main until a release
+    # ships; this constraint here is what a plain `pip install han-agents`
+    # actually resolves, so it still needs bumping once negmas-llm releases.
+    "negmas-llm>=0.4.3",
     # An LLM finalist needs torch at import time. LLM agents also need a
     # reachable Ollama backend at run time (see tests/test_agents2026.py).
     "torch",
@@ -37,6 +40,15 @@ dev = [
     "pytest",
     "hypothesis",
 ]
+
+[tool.uv.sources]
+# See the dependencies comment above: not yet a PyPI release. A direct
+# PEP 508 URL reference here (rather than in [project.dependencies]) is
+# excluded from published package metadata, so `uv build`/`twine
+# check`/PyPI upload stay clean (PyPI rejects Requires-Dist entries with
+# direct references). Only `uv sync`/`uv run` honor this; plain `pip
+# install han-agents` gets whatever `negmas-llm>=0.4.3` resolves to on PyPI.
+negmas-llm = { git = "https://github.com/autoneg/negmas-llm.git" }
 
 [tool.setuptools]
 package-dir = {"" = "src"}

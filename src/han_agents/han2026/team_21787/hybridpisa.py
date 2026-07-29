@@ -5,7 +5,7 @@ import statistics
 from negmas.sao.common import SAOResponse, SAOState, ResponseType
 from negmas.sao.negotiators.base import SAOCallNegotiator
 from negmas.gb.components.genius.models import GScalableBayesianModel
-from negmas_llm import OllamaNegotiator
+from negmas_llm import LLMNegotiator
 
 _W = {
     1: [1],
@@ -16,14 +16,15 @@ _W = {
 
 _BEHAVIOUR_THRESHOLD = 5
 
-class HybridPisaNegotiator(OllamaNegotiator):
+class HybridPisaNegotiator(LLMNegotiator):
     #Heuristic bidder (Keskin2021 + Bayesian opponent model) that uses the
-    #built-in OllamaNegotiator only for its LLM machinery (``_call_llm``).
+    #built-in LLMNegotiator only for its LLM machinery (``_call_llm``).
+    #Provider/model resolve centrally (explicit arg > per-type env var >
+    #global env var > built-in default of ollama/qwen3:4b-instruct) instead
+    #of being locked to the OllamaNegotiator convenience class.
     _opp_behaviour = "silent"
 
     def __init__(self, **kwargs):
-        kwargs.setdefault("model", "qwen3:4b-instruct")
-        kwargs.setdefault("api_base", None)
         super().__init__(**kwargs)
 
         # LLM call configuration

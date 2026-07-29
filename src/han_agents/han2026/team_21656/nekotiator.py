@@ -6,7 +6,7 @@ import re
 import warnings 
 from attrs import define ,field 
 from typing import Any 
-from negmas_llm import OllamaNegotiator 
+from negmas_llm import LLMNegotiator
 from negmas .sao import ResponseType ,SAOResponse ,SAOState 
 from negmas .common import Outcome ,Value 
 from negmas .preferences .base_ufun import BaseUtilityFunction 
@@ -17,7 +17,7 @@ from negmas .gb .components .genius .models import GFSEGABayesianModel
 
 
 
-class Nekotiator (OllamaNegotiator ):
+class Nekotiator (LLMNegotiator ):
     def __init__ (self ,temperature :float =0.3 ,timeout :float =60.0 ,num_retries :int =1 ,max_tokens :int =512 ,**kwargs ):
         llm_kwargs =kwargs .pop ("llm_kwargs",{})
         llm_kwargs .setdefault ("timeout",timeout )

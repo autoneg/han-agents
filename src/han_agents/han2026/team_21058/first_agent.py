@@ -1,4 +1,4 @@
-from negmas_llm import OllamaNegotiator
+from negmas_llm import LLMNegotiator
 
 # =============================================================================
 # Default Prompts (copied from negmas_llm, customize as needed)
@@ -134,12 +134,14 @@ What is your decision? Respond with JSON.
 """
 
 
-class FirstAgent(OllamaNegotiator):
-    """A simple LLM-based negotiator using Ollama.
+class FirstAgent(LLMNegotiator):
+    """A simple LLM-based negotiator using Ollama by default.
 
-    This negotiator uses a local Ollama instance to make negotiation decisions.
-    It inherits all the LLM-based negotiation capabilities from OllamaNegotiator
-    and can be customized through various prompts and parameters.
+    This negotiator inherits all the LLM-based negotiation capabilities from
+    LLMNegotiator and can be customized through various prompts and
+    parameters. Provider/model resolve centrally (explicit arg > per-type
+    env var > global env var > built-in default of ollama/qwen3:4b-instruct)
+    instead of being locked to the OllamaNegotiator convenience class.
     """
 
     def __init__(
