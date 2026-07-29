@@ -20,13 +20,6 @@ from negmas.gb.common import ExtendedResponseType
 from negmas.sao import SAONegotiator
 from negmas_llm.meta import LLMMetaNegotiator
 
-try:
-    from negmas_llm.common import DEFAULT_MODELS
-except ImportError:
-    DEFAULT_MODELS = dict(ollama="qwen3:4b-instruct")
-
-DEFAULT_OLLAMA_MODEL = DEFAULT_MODELS["ollama"]
-
 
 # =============================================================================
 # Section A — Module-level constants and helpers
@@ -614,10 +607,14 @@ class GunnerAgent(LLMMetaNegotiator):
             base_floor_minimum=base_floor_minimum,
             max_repeats=max_repeats,
         )
-        kwargs.setdefault("provider", "ollama")
-        kwargs.setdefault("model", DEFAULT_OLLAMA_MODEL)
         super().__init__(
             base_negotiator=core,
+            # provider/model deliberately NOT set: LLMMetaNegotiator resolves them
+            # from the environment (explicit > per-type env > global env >
+            # default), so the deployment decides which model this runs against.
+            # Pinning "ollama"/"qwen3:4b-instruct" here made the agent unusable
+            # anywhere that model is not pulled, and unable to follow a central
+            # configuration.
             temperature=temperature,
             max_tokens=max_tokens,
             system_prompt=SYSTEM_PROMPT,
