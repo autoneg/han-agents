@@ -18,7 +18,11 @@ classifiers = [
 # into the optional-dependencies block below by set_han_finalists.py.
 dependencies = [
     "negmas>=0.15.7",
-    "negmas-llm>=0.4.3",
+    # negmas-llm's central provider/model resolution (resolve_llm_config,
+    # used by GunnerAgent/MiAgent/Group8Negotiator so they never hardcode a
+    # provider or model) landed on GitHub main 2026-07-23 but has not been
+    # cut into a PyPI release yet (0.4.3 predates it) — pin to main until it is.
+    "negmas-llm @ git+https://github.com/autoneg/negmas-llm.git",
     # An LLM finalist needs torch at import time. LLM agents also need a
     # reachable Ollama backend at run time (see tests/test_agents2026.py).
     "torch",

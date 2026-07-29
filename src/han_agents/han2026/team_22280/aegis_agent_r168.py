@@ -150,7 +150,7 @@ class AegisPriorityNegotiatorR2(SAOCallNegotiator):
         own_utility_guard: float = 0.42,
         repeat_escape_after: int = 4,
         use_llm_analysis: bool = True,
-        llm_model: str = "qwen3:4b-instruct",
+        llm_model: str | None = None,  # resolved centrally
         llm_timeout: float = 10.0,
         llm_interval: int = 8,
         use_llm_messages: bool = True,
@@ -1513,7 +1513,7 @@ class AegisScoreMaximizingR12Negotiator(AegisStrategicBridgeNegotiator):
         minimum_accept_floor: float = 0.35,
         use_llm_director: bool = True,
         use_llm_messages: bool = True,
-        llm_model: str = "qwen3:4b-instruct",
+        llm_model: str | None = None,  # resolved centrally
         llm_timeout: float = 3.0,
         llm_interval: int = 10,
         llm_message_interval: int = 10,
@@ -6436,7 +6436,7 @@ class AegisR162Negotiator(AegisR161Negotiator):
         self,
         *args: Any,
         use_llm_messages: bool = True,
-        llm_model: str = "qwen3:4b-instruct",
+        llm_model: str | None = None,  # resolved centrally
         r151_selector_timeout: float = 0.05,
         r151_message_timeout: float = 8.0,
         llm_message_timeout: float | None = None,

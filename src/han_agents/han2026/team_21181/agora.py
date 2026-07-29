@@ -290,7 +290,7 @@ class AgoraNegotiator(LLMBoulwareTBNegotiator):
 
     def __init__(
         self,
-        provider: str = "ollama",
+        provider: str | None = None,  # resolved centrally
         temperature: float = 0.7,
         # Cut from 768 → 200 (2026-04-13): we ask for 2 sentences only,
         # typical completion is ~40-80 tokens. 768 was a default pulled

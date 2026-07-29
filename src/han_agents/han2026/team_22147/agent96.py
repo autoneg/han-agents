@@ -77,7 +77,7 @@ class Agent96(SAOCallNegotiator):
 
     def __init__(
         self,
-        model: str = DEFAULT_OLLAMA_MODEL,
+        model: str | None = None,  # resolved centrally
         temperature: float = 0.35,
         max_tokens: int = 80,
         use_structured_output: bool = True,

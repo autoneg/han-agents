@@ -452,8 +452,8 @@ class AdaptiveBargainNegotiator(LLMMetaNegotiator):
     def __init__(
         self,
         base_negotiator: BOANegotiator | None = None,
-        provider: str = "ollama",
-        model: str = DEFAULT_OLLAMA_MODEL,
+        provider: str | None = None,  # resolved centrally
+        model: str | None = None,  # resolved centrally
         temperature: float = 0.4,
         max_tokens: int = 128,
         use_structured_output: bool = True,

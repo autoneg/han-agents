@@ -926,8 +926,8 @@ class NeoNegotiator(LLMMetaNegotiator):
     def __init__(
         self,
         *,
-        provider: str = "ollama",
-        model: str = DEFAULT_OLLAMA_MODEL,
+        provider: str | None = None,  # resolved centrally
+        model: str | None = None,  # resolved centrally
         temperature: float = 0.5,
         max_tokens: int = 512,
         # ── Bidding strategy selector ─────────────────────────────────────────
