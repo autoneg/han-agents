@@ -233,9 +233,10 @@ class Group8Negotiator(LLMMetaNegotiator):
         }
         self._max_utility = None  # cached on first use
 
+        kwargs.setdefault("provider", "ollama")
+        kwargs.setdefault("model", DEFAULT_OLLAMA_MODEL)
         super().__init__(
             base_negotiator=base,
-            # provider/model resolved from the environment by LLMMetaNegotiator.
             system_prompt=BAP_SYSTEM_PROMPT,
             temperature=0.4,
             max_tokens=512,

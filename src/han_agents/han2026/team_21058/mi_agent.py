@@ -51,10 +51,11 @@ Guidelines:
 
 class MiAgent(LLMMetaNegotiator):
     def __init__(self, **kwargs):
+        kwargs.setdefault("provider", "ollama")
+        kwargs.setdefault("model", DEFAULT_OLLAMA_MODEL)
         super().__init__(
-            base_negotiator=LinearTBNegotiator(), 
+            base_negotiator=LinearTBNegotiator(),
             system_prompt=SYSTEM_PROMPT,
-            # provider/model resolved from the environment by LLMMetaNegotiator.
             **kwargs
         )
         self.strategy_fixed = False
