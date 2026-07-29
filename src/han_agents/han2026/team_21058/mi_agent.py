@@ -54,8 +54,7 @@ class MiAgent(LLMMetaNegotiator):
         super().__init__(
             base_negotiator=LinearTBNegotiator(), 
             system_prompt=SYSTEM_PROMPT,
-            provider="ollama",
-            model="qwen3:4b-instruct",
+            # provider/model resolved from the environment by LLMMetaNegotiator.
             **kwargs
         )
         self.strategy_fixed = False

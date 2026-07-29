@@ -235,8 +235,7 @@ class Group8Negotiator(LLMMetaNegotiator):
 
         super().__init__(
             base_negotiator=base,
-            provider="ollama",
-            model=DEFAULT_OLLAMA_MODEL,
+            # provider/model resolved from the environment by LLMMetaNegotiator.
             system_prompt=BAP_SYSTEM_PROMPT,
             temperature=0.4,
             max_tokens=512,

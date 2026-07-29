@@ -609,8 +609,12 @@ class GunnerAgent(LLMMetaNegotiator):
         )
         super().__init__(
             base_negotiator=core,
-            provider="ollama",
-            model="qwen3:4b-instruct",
+            # provider/model deliberately NOT set: LLMMetaNegotiator resolves them
+            # from the environment (explicit > per-type env > global env >
+            # default), so the deployment decides which model this runs against.
+            # Pinning "ollama"/"qwen3:4b-instruct" here made the agent unusable
+            # anywhere that model is not pulled, and unable to follow a central
+            # configuration.
             temperature=temperature,
             max_tokens=max_tokens,
             system_prompt=SYSTEM_PROMPT,
