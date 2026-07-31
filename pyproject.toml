@@ -48,7 +48,15 @@ dev = [
 # check`/PyPI upload stay clean (PyPI rejects Requires-Dist entries with
 # direct references). Only `uv sync`/`uv run` honor this; plain `pip
 # install han-agents` gets whatever `negmas-llm>=0.4.3` resolves to on PyPI.
-negmas-llm = { git = "https://github.com/autoneg/negmas-llm.git" }
+#
+# The URL form matters: a consumer that depends on han-agents *and* on
+# negmas-llm (e.g. koshodojo's kodolib) must declare a byte-identical source,
+# or uv fails the whole resolution with "Requirements contain conflicting URLs
+# for package `negmas-llm`" -- `...negmas-llm.git` and `...negmas-llm@main` are
+# two different URLs to uv even when they resolve to the same commit. Keep this
+# spelling (no `.git` suffix, explicit `branch = "main"`) in sync with the other
+# repositories that pin negmas-llm the same way.
+negmas-llm = { git = "https://github.com/autoneg/negmas-llm", branch = "main" }
 
 [tool.setuptools]
 package-dir = {"" = "src"}
