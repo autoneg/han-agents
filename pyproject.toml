@@ -3,7 +3,7 @@ name = "han-agents"
 version = "0.0.2"
 description = "Finalist agents from the Human Agent Negotiation (HAN) league of ANAC"
 readme = "README.md"
-requires-python = "~=3.11"
+requires-python = ">=3.11"
 authors = [
     { name = "Yasser Mohammad", email = "yasserfarouk@gmail.com" },
 ]
