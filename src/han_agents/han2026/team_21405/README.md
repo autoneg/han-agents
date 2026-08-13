@@ -715,8 +715,6 @@ The HANI (Human-Agent Negotiation Interface) allows you to test your agent in re
 - **Evaluating user experience:** Test if your agent's messages are clear and persuasive
 - **Practice:** Experience negotiating against your own agent to find weaknesses
 
-![HANI GUI Interface](images/hani-gui.png)
-
 #### Quick Start
 
 To launch the GUI with your agent in guest mode (no authentication required):
