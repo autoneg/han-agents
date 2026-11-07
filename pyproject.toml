@@ -17,7 +17,7 @@ classifiers = [
 # under src/han_agents/han{year}/team_X/requirements.txt and are merged
 # into the optional-dependencies block below by set_han_finalists.py.
 dependencies = [
-    "negmas>=0.15.7",
+    "negmas>=0.17.0",
     # negmas-llm's central provider/model resolution (resolve_llm_config,
     # used throughout han_agents.han2026 so no agent hardcodes a provider or
     # model) landed on GitHub main 2026-07-23 but has not been cut into a
