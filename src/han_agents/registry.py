@@ -11,6 +11,7 @@ a filtered subset) for a given year / track. `track` is required for
 SCML and unused for ANL/HAN. `qualified_only` drops disqualified
 entries (a qualified agent is any non-disqualified participant).
 """
+
 from __future__ import annotations
 
 import json
@@ -27,7 +28,7 @@ _REGISTRY: dict = json.loads(r"""
             "class_path": "han_agents.han2026.team_21049.negotiatorx.negotiator.NegotiatorX",
             "metadata": {
                 "finalist": true,
-                "winner": false,
+                "winner": true,
                 "qualified": true,
                 "disqualified": false,
                 "uses_llm": false,
@@ -72,7 +73,7 @@ _REGISTRY: dict = json.loads(r"""
             "class_path": "han_agents.han2026.team_21099.equinox.Equinox",
             "metadata": {
                 "finalist": true,
-                "winner": false,
+                "winner": true,
                 "qualified": true,
                 "disqualified": false,
                 "uses_llm": true,
@@ -357,7 +358,7 @@ _REGISTRY: dict = json.loads(r"""
             "class_path": "han_agents.han2026.team_22280.aegis_agent_r168.AegisR168FinalNegotiator",
             "metadata": {
                 "finalist": true,
-                "winner": false,
+                "winner": true,
                 "qualified": true,
                 "disqualified": false,
                 "uses_llm": true,
